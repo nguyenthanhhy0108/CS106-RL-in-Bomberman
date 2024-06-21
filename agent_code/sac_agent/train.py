@@ -277,12 +277,12 @@ game_rewards = {
         e.DEAD_END: -.5,
         e.WAITED: -30,
         e.INVALID_ACTION: -2,
-        e.DUMB_BOMB: -10,
+        e.DUMB_BOMB: -100,
         e.MOVED_AWAY_FROM_COIN: -1,
         e.GOT_KILLED: -30,
         e.MOVED_TO_BOMB: -3,
         e.ANTIDODGED_BOMB: -5,
-        e.EDGE_BOMB: -30
+        e.EDGE_BOMB: -60
     }
 for key in game_rewards:
     game_rewards[key] = game_rewards[key]/30
