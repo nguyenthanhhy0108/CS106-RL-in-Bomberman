@@ -11,13 +11,16 @@ class ResidualBlock(nn.Module):
         super(ResidualBlock, self).__init__()
         self.fc1 = nn.Linear(input_dim, hidden_size)
         self.bn1 = nn.BatchNorm1d(hidden_size)
-        self.fc2 = nn.Linear(hidden_size, input_dim)
-        self.bn2 = nn.BatchNorm1d(input_dim)
+        self.fc2 = nn.Linear(hidden_size, hidden_size)  # Increased hidden_size
+        self.bn2 = nn.BatchNorm1d(hidden_size)
+        self.fc3 = nn.Linear(hidden_size, input_dim)    # Changed to input_dim
+        self.bn3 = nn.BatchNorm1d(input_dim)
     
     def forward(self, x):
         residual = x
         out = F.relu(self.bn1(self.fc1(x)))
-        out = self.bn2(self.fc2(out))
+        out = F.relu(self.bn2(self.fc2(out)))  # Additional layer
+        out = self.bn3(self.fc3(out))          # Additional layer
         out += residual
         return F.relu(out)
 
@@ -29,7 +32,7 @@ class SAC(nn.Module):
         self.critic1 = nn.Sequential(
             nn.Linear(state_dim + action_dim, hidden_size),
             nn.ReLU(),
-            ResidualBlock(hidden_size, hidden_size // 2),
+            ResidualBlock(hidden_size, hidden_size),
             nn.Dropout(0.2),
             nn.Linear(hidden_size, 1)
         )
@@ -37,8 +40,9 @@ class SAC(nn.Module):
         # Critic 2
         self.critic2 = nn.Sequential(
             nn.Linear(state_dim + action_dim, hidden_size),
-            nn.ReLU(),
-            ResidualBlock(hidden_size, hidden_size // 2),
+            nn.LeakyReLU(),
+            ResidualBlock(hidden_size, hidden_size),
+            ResidualBlock(hidden_size, hidden_size),
             nn.Dropout(0.2),
             nn.Linear(hidden_size, 1)
         )
@@ -46,8 +50,9 @@ class SAC(nn.Module):
         # Actor
         self.actor = nn.Sequential(
             nn.Linear(state_dim, hidden_size),
-            nn.ReLU(),
-            ResidualBlock(hidden_size, hidden_size // 2),
+            nn.LeakyReLU(),
+            ResidualBlock(hidden_size, hidden_size),
+            ResidualBlock(hidden_size, hidden_size),
             nn.Dropout(0.2),
             nn.Linear(hidden_size, action_dim)
         )

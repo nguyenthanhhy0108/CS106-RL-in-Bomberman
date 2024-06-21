@@ -8,7 +8,8 @@ from settings import BOMB_TIMER
 
 
 ACTIONS = ['UP', 'RIGHT', 'DOWN', 'LEFT', 'WAIT', 'BOMB']
-
+BOMB_TIMER = 4
+BLAST_RADIUS = 3
 
 def setup(self):
     """
@@ -73,7 +74,7 @@ def state_to_features(game_state: dict) -> np.array:
 
     nrows, ncols = field.shape
     
-    field_channel = field
+    field_channel = field.copy()
     agent_channel = np.zeros(field.shape)
     others_channel = np.zeros(field.shape)
     bombs_channel = np.zeros(field.shape)
@@ -90,9 +91,6 @@ def state_to_features(game_state: dict) -> np.array:
     
     for bomb in bombs:
         bomb_pos, bomb_timer = bomb
-        flag = 1
-        if agent_pos == bomb_pos:
-            flag = -1
         x, y = bomb_pos
         bombs_channel[x, y] = bomb_timer
         
@@ -102,7 +100,7 @@ def state_to_features(game_state: dict) -> np.array:
         # Mark danger zone in all four directions
         for dx in range(1, blast_radius + 1):
             if x + dx < nrows and field[x + dx, y] != -1:
-                bombs_channel[x + dx, y] = bomb_timer / BOMB_TIMER * flag
+                bombs_channel[x + dx, y] = bomb_timer
                 if field[x + dx, y] == -1:  # Stop if obstacle is hit
                     break
             else:
@@ -110,7 +108,7 @@ def state_to_features(game_state: dict) -> np.array:
 
         for dx in range(1, blast_radius + 1):
             if x - dx >= 0 and field[x - dx, y] != -1:
-                bombs_channel[x - dx, y] = bomb_timer / BOMB_TIMER * flag
+                bombs_channel[x - dx, y] = bomb_timer
                 if field[x - dx, y] == -1:  # Stop if obstacle is hit
                     break
             else:
@@ -118,7 +116,7 @@ def state_to_features(game_state: dict) -> np.array:
         
         for dy in range(1, blast_radius + 1):
             if y + dy < ncols and field[x, y + dy] != -1:
-                bombs_channel[x, y + dy] = bomb_timer / BOMB_TIMER * flag
+                bombs_channel[x, y + dy] = bomb_timer
                 if field[x, y + dy] == -1:  # Stop if obstacle is hit
                     break
             else:
@@ -126,7 +124,7 @@ def state_to_features(game_state: dict) -> np.array:
 
         for dy in range(1, blast_radius + 1):
             if y - dy >= 0 and field[x, y - dy] != -1:
-                bombs_channel[x, y - dy] = bomb_timer / BOMB_TIMER * flag
+                bombs_channel[x, y - dy] = bomb_timer
                 if field[x, y - dy] == -1:  # Stop if obstacle is hit
                     break
             else:

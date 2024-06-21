@@ -264,28 +264,28 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     self.epoch += 1
 
 game_rewards = {
-        e.KILLED_OPPONENT: 30,
-        e.COIN_COLLECTED: 30,
+        e.KILLED_OPPONENT: 50,
+        e.COIN_COLLECTED: 20,
         e.MOVED_TO_COIN: 5,
-        e.MOVED_AWAY_FROM_BOMB: 2,
-        e.DODGED_BOMB: 3,
-        e.CRATE_DESTROYED: 30,
-        e.SMART_BOMB: 6,
+        e.MOVED_AWAY_FROM_BOMB: 200,
+        e.DODGED_BOMB: 10,
+        e.CRATE_DESTROYED: 20,
+        e.SMART_BOMB: 600,
         e.BOMB_DROPPED: 5,
         e.NOT_DEAD_END: .5,
         ########
         e.DEAD_END: -.5,
-        e.WAITED: -30,
-        e.INVALID_ACTION: -2,
-        e.DUMB_BOMB: -100,
-        e.MOVED_AWAY_FROM_COIN: -1,
-        e.GOT_KILLED: -30,
-        e.MOVED_TO_BOMB: -3,
-        e.ANTIDODGED_BOMB: -5,
-        e.EDGE_BOMB: -60
+        e.WAITED: -10,
+        e.INVALID_ACTION: -5,
+        e.DUMB_BOMB: -200,
+        e.MOVED_AWAY_FROM_COIN: -2,
+        e.GOT_KILLED: -200,
+        e.MOVED_TO_BOMB: -50,
+        e.ANTIDODGED_BOMB: -10,
+        e.EDGE_BOMB: -200
     }
-for key in game_rewards:
-    game_rewards[key] = game_rewards[key]/30
+# for key in game_rewards:
+#     game_rewards[key] = game_rewards[key]/30
 
 def reward_from_events(self, events: List[str]) -> int:
     """
