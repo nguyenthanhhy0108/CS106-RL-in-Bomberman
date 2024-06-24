@@ -1,5 +1,5 @@
 # Survey Reinforcement Learning in Bomberman
-Đây là repository chứa mã nguồn và tài liệu liên quan đến đồ án môn Trí tuệ nhân tạo - CS106.O21.KHTN, nghiên cứu về reinforcement learning trong Bomberman.
+Đây là repository chứa code và tài liệu liên quan đến đồ án môn Trí tuệ nhân tạo - CS106.O21.KHTN, nghiên cứu về reinforcement learning trong Bomberman.
 
 ---
 ### Giảng viên hướng dẫn
