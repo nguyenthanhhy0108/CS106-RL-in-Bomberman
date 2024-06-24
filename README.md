@@ -1,34 +1,31 @@
 # Survey Reinforcement Learning in Bomberman
-
 Đây là repository chứa mã nguồn và tài liệu liên quan đến đồ án môn Trí tuệ nhân tạo - CS106.O21.KHTN, nghiên cứu về reinforcement learning trong Bomberman.
 
-## Giảng viên hướng dẫn
+---
+### Giảng viên hướng dẫn
 TS. Lương Ngọc Hoàng
 
-## Thành viên nhóm
+---
+### Thành viên nhóm
 - 22520004 - Trần Như Cẩm Nguyên
 - 22520593 - Nguyễn Thanh Hỷ
 - 22520946 - Lê Tín Nghĩa
 
-## Cấu trúc thư mục
+---
+### Giới thiệu
+Người chơi di chuyển Bomberman trong mê cung, đặt bom để phá hủy các khối gỗ cũng như tiêu diệt kẻ địch. Mục tiêu là tiêu diệt tất cả cả địch và thu thập vật phẩm.
 
-- agent_code/: Code của các agent trong game.
-- assets/: Tài nguyên đồ họa cho Bomberman.
-- logs/: Thư mục chứa các file log của game.
-- replays/: Các file ghi lại các trận đấu replay của game.
-- results/: Kết quả thực nghiệm và đánh giá các mô hình học tăng cường.
-- screenshots/: Ảnh chụp màn hình của game hoặc kết quả thực nghiệm.
-- Slides.pdf: Bài trình bày Slide thuyết trình dự án.
-- agents.py, environment.py, events.py, fallbacks.py, items.py, main.py, replay.py, settings.py: Các file code chính của dự án.
-  
+<img width="269" alt="image" src="https://github.com/nguyenthanhhy0108/CS106-RL-in-Bomberman/assets/73975520/888810b4-bd7c-4244-9e18-dcde4b5193bb">
+
+---
 ## Cài đặt
 
-- Đầu tiên, cần clone repository
+### Clone repository
 ```
 git clone https://github.com/nguyenthanhhy0108/CS106-RL-in-Bomberman
 ```
 
-### Tự điều khiển để chơi
+### Người dùng điều khiển để chơi
 ```
 python main.py play --my-agent user_agent
 ```
@@ -39,11 +36,12 @@ python main.py play
 ```
 
 ### Train
+Ví dụ là `sac_agent`. Các agent khác xem trong folder `agent_code`.
 ```
-python main.py play --my-agent tpl_agent --train 1 --n-rounds 1000
+python main.py play --my-agent sac_agent --train 1 --n-rounds 1000
 ```
 
-### Cho mô hình đã train chơi
+### Chạy với mô hình đã train
 ```
-python main.py play --my-agent tpl_agent
+python main.py play --my-agent sac_agent
 ```
